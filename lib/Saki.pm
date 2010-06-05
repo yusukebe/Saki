@@ -84,7 +84,7 @@ __END__
 
 =head1 NAME
 
-Saki - glue for web application.
+Saki - glue for web applications.
 
 =head1 SYNOPSIS
 
