@@ -6,11 +6,12 @@ use Router::Simple;
 use UNIVERSAL::require;
 use Template;
 use Carp;
+use Saki::Container;
 
 our $VERSION = '0.01';
 
 my $_router = Router::Simple->new;
-my ($_class, $_template);
+my ($_class, $_template, $_model);
 
 $_template = Template->new({ INCLUDE_PATH => 'tmpl/' });
 
@@ -24,7 +25,8 @@ sub app {
         return handle_500($@) if $@;
         my $req = Plack::Request->new($env);
         my ( $action, $code ) = ( $p->{action} );
-        eval { $code = $controller->$action( $req, $p ) };
+        my $c = Saki::Container->new( req => $req , model => $_model );
+        eval { $code = $controller->$action( $c, $p ) };
         return handle_500($@) if $@;
         return handle_404() unless $code;
         if (   ref $code eq 'ARRAY'
@@ -69,12 +71,17 @@ sub post {
     $_router->connect( $path, $args );
 }
 
+sub model {
+    my ( $name, $model ) = @_;
+    $_model->{$name} = $model;
+}
+
 sub import {
     strict->import;
     warnings->import;
     no strict 'refs';
     $_class    = caller;
-    my $functions = [qw/get post app/];
+    my $functions = [qw/get post app model/];
     for my $function (@$functions) {
         *{"${_class}\::$function"} = \&$function;
     }
