@@ -1,31 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf8">
-<link rel="stylesheet" href="[% base %]static/screen.css" type="text/css">
-<title>Saki</title>
-</head>
-
-<body>
-<div class="container">
-  <hr class="space" />
-  <h1>Hello</h1>
-  <p>[% message | html %]</p>
-  <h2>no pastes</h2>
-  <h3>post</h3>
-  <form action="[% base %]post" method="post">
+<h1>Hello</h1>
+<p>[% message | html %]</p>
+<h2>no pastes</h2>
+<h3>post</h3>
+<form action="[% base %]post" method="post">
   <p><textarea name="body" cols="50" rows="8"></textarea></p>
   <p><input type="submit" value="no paste" /><p>
-  </form>
-  <h3>entries</h3>
-  [% FOREACH entry = entries -%]
-  <p><a href="[% base %]entry/[% entry.id | html %]">[% entry.id | html %]</a></p>
-  <pre>
-  [%- entry.body | html -%]
-  </pre>
-  [% END -%]
-  <hr />
-  <address></address>
-</div>
-</body>
-</html>
+</form>
+<h3>entries</h3>
+[% FOREACH entry = entries -%]
+<p><a href="[% base %]entry/[% entry.id | html %]">[% entry.id | html %]</a></p>
+<pre>
+[%- entry.body | html -%]
+</pre>
+[% END -%]

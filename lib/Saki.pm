@@ -11,9 +11,10 @@ use Saki::Container;
 our $VERSION = '0.01';
 
 my $_router = Router::Simple->new;
-my ( $_class, $_template, $_model );
+my ( $_class, $_template, $_model, $_view );
 
-$_template = Template->new( { INCLUDE_PATH => 'tmpl/' } );
+$_view = { INCLUDE_PATH => 'tmpl/' };
+$_template = Template->new( $_view );
 
 sub app {
     sub {
@@ -77,12 +78,18 @@ sub model {
     $_model->{$name} = $model;
 }
 
+sub view {
+    my ( $name, $value ) = @_;
+    $_view->{$name} = $value;
+    $_template = Template->new( $_view );
+}
+
 sub import {
     strict->import;
     warnings->import;
     no strict 'refs';
     $_class    = caller;
-    my $functions = [qw/get post app model/];
+    my $functions = [qw/get post app model view/];
     for my $function (@$functions) {
         *{"${_class}\::$function"} = \&$function;
     }

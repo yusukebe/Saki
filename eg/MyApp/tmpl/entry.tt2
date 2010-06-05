@@ -1,0 +1,8 @@
+<h1>Permalink</h1>
+<h2>[% entry.id | html %]</h2>
+<pre>
+[%- entry.body | html -%]
+</pre>
+<p>
+<a href="[% base %]">back to top.</a>
+</p>
