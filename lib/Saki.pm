@@ -35,7 +35,9 @@ sub app {
             $code->[1]->{base} = $req->base;
             $_template->process( $code->[0], $code->[1], \$html )
               or return handle_500( $_template->error );
-            return [ 200, [ 'Content-Length' => length $html ], [$html] ];
+            my $types = [ 'Content-Length' => length $html ];
+            $types = $code->[2] if defined $code->[2] && $code->[2];
+            return [ 200, $types , [$html] ];
         }
         else {
             return $code;
@@ -92,7 +94,7 @@ Saki - glue for web applications.
 
 =head1 DESCRIPTION
 
-Saki is glue for web application using Plack::Request, Router::Simple, Template-Toolkit.
+Saki is glue for web applications using Plack::Request, Router::Simple, Template-Toolkit.
 
 =head1 AUTHOR
 
