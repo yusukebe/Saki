@@ -11,7 +11,7 @@
   <hr class="space" />
   <h1>Hello</h1>
   <p>[% message | html %]</p>
-  <hr>
+  <hr />
   <address></address>
 </div>
 </body>

@@ -2,7 +2,10 @@ use inc::Module::Install;
 name 'Saki';
 all_from 'lib/Saki.pm';
 
-# requires '';
+requires 'Plack::Request';
+requires 'Router::Simple';
+requires 'UNIVERSAL::require';
+requires 'Template';
 
 tests 't/*.t';
 author_tests 'xt';

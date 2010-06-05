@@ -22,8 +22,9 @@ sub app {
         my $controller = $_class . "::$p->{controller}";
         eval { $controller->use };
         return handle_500($@) if $@;
+        my $req = Plack::Request->new($env);
         my ( $action, $code ) = ( $p->{action} );
-        eval { $code = $controller->$action };
+        eval { $code = $controller->$action( $req, $p ) };
         return handle_500($@) if $@;
         return handle_404() unless $code;
         if (   ref $code eq 'ARRAY'
@@ -31,7 +32,6 @@ sub app {
             && ref $code->[1] eq 'HASH' )
         {
             my $html;
-            my $req = Plack::Request->new($env);
             $code->[1]->{base} = $req->base;
             $_template->process( $code->[0], $code->[1], \$html )
               or return handle_500( $_template->error );
@@ -84,7 +84,7 @@ __END__
 
 =head1 NAME
 
-Saki - Yet Another lightweight web application framework.
+Saki - glue for web application.
 
 =head1 SYNOPSIS
 
@@ -92,7 +92,7 @@ Saki - Yet Another lightweight web application framework.
 
 =head1 DESCRIPTION
 
-Saki is
+Saki is glue for web application using Plack::Request, Router::Simple, Template-Toolkit.
 
 =head1 AUTHOR
 
