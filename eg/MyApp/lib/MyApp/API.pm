@@ -11,7 +11,8 @@ has 'db' => (
     }
 );
 
-has 'uuid' => ( is => 'ro', isa => 'Data::UUID', default => sub { Data::UUID->new } );
+has 'uuid' =>
+  ( is => 'ro', isa => 'Data::UUID', default => sub { Data::UUID->new } );
 
 sub BUILD {
     my $self = shift;
@@ -19,11 +20,12 @@ sub BUILD {
 }
 
 sub get_entries {
-    my $self = shift;
+    my $self    = shift;
     my @entries = $self->db->search('entry');
-    if( wantarray ){
+    if (wantarray) {
         return @entries;
-    }else{
+    }
+    else {
         return \@entries;
     }
 }

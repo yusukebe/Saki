@@ -11,9 +11,9 @@ use Saki::Container;
 our $VERSION = '0.01';
 
 my $_router = Router::Simple->new;
-my ($_class, $_template, $_model);
+my ( $_class, $_template, $_model );
 
-$_template = Template->new({ INCLUDE_PATH => 'tmpl/' });
+$_template = Template->new( { INCLUDE_PATH => 'tmpl/' } );
 
 sub app {
     sub {
@@ -25,10 +25,11 @@ sub app {
         return handle_500($@) if $@;
         my $req = Plack::Request->new($env);
         my ( $action, $code ) = ( $p->{action} );
-        my $c = Saki::Container->new( req => $req , model => $_model );
+        my $c = Saki::Container->new( req => $req, model => $_model );
         eval { $code = $controller->$action( $c, $p ) };
         return handle_500($@) if $@;
         return handle_404() unless $code;
+
         if (   ref $code eq 'ARRAY'
             && defined $code->[1]
             && ref $code->[1] eq 'HASH' )
@@ -39,7 +40,7 @@ sub app {
               or return handle_500( $_template->error );
             my $types = [ 'Content-Length' => length $html ];
             $types = $code->[2] if defined $code->[2] && $code->[2];
-            return [ 200, $types , [$html] ];
+            return [ 200, $types, [$html] ];
         }
         else {
             return $code;
