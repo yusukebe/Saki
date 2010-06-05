@@ -7,6 +7,13 @@ sub index {
         { message => 'noblesse oblige', entries => $entries } ];
 }
 
+sub entry {
+    my ( $self, $c, $args ) = @_;
+    my $id    = $args->{id};
+    my $entry = $c->model('API')->get_entry($id);
+    return [ 'entry.tt2', { entry => $entry } ];
+}
+
 sub post {
     my ( $self, $c ) = @_;
     my $body = $c->req->param('body');

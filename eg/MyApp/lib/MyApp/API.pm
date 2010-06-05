@@ -30,6 +30,12 @@ sub get_entries {
     }
 }
 
+sub get_entry {
+    my ( $self, $id ) = @_;
+    my $entry = $self->db->single( 'entry', { id => $id } );
+    return $entry;
+}
+
 sub create_entry {
     my ( $self, $body ) = @_;
     my $uuid = $self->uuid->create_str();

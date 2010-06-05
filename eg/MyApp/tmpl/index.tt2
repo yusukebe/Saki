@@ -14,13 +14,14 @@
   <h2>no pastes</h2>
   <h3>post</h3>
   <form action="[% base %]post" method="post">
-  <p><textarea name="body" cols="40" rows="8"></textarea></p>
+  <p><textarea name="body" cols="50" rows="8"></textarea></p>
   <p><input type="submit" value="no paste" /><p>
   </form>
   <h3>entries</h3>
   [% FOREACH entry = entries -%]
+  <p><a href="[% base %]entry/[% entry.id | html %]">[% entry.id | html %]</a></p>
   <pre>
-  [% entry.body | html %]
+  [%- entry.body | html -%]
   </pre>
   [% END -%]
   <hr />

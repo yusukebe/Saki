@@ -6,6 +6,7 @@ my $api = MyApp::API->new();
 model 'API' => $api;
 
 get '/' => { controller => 'Root', action => 'index' };
+get '/entry/:id' => { controller => 'Root', action => 'entry' };
 post '/post' => { controller => 'Root', action => 'post' };
 
 1;
