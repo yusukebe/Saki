@@ -1,6 +1,6 @@
-package MyApp;
+package MyApp::Web;
 use Saki;
 
 get '/' => { controller => 'Root', action => 'index' };
 
-eden;
+1;
