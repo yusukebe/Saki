@@ -1,9 +1,8 @@
 package MyApp::Web::Root;
-use base 'Saki::Controller';
 
-sub root {
+sub index {
     my ( $self, $c ) = @_;
-    $c->stash->{message} = 'noblesse oblige';
+    return [ 'index.tt2', { message => 'noblesse oblige' } ];
 }
 
 1;
