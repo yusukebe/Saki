@@ -41,8 +41,8 @@ sub app {
             my $tt = $_template->{$view_name};
             $tt->process( $code->[0], $code->[1], \$html )
                 or return handle_500( $tt->error );
-            my $types = [ 'Content-Length' => length $html ];
-            push @$types, @{$code->[2]} if defined $code->[2] && $code->[2];
+            my $types = [ 'Content-Length' => length $html, 'Content-Type' => 'text/html' ];
+            unshift @$types, @{$code->[2]} if defined $code->[2] && $code->[2];
             return [ 200, $types, [$html] ];
         }
         else {
