@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>nopaste - by Saki</title>
+    <link>[% base %]</link>
+    [% FOREACH entry = entries -%]
+    <item>
+      <link>[% base %]entry/[% entry.id | html %]</link>
+      <title>[% entry.body | html %]</title>
+    </item>
+    [% END -%]
+  </channel>
+</rss>

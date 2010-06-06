@@ -21,4 +21,10 @@ sub post {
     return [ 301, [ Location => $c->req->base ], [] ];
 }
 
+sub rss {
+    my ( $self, $c ) = @_;
+    my $entries = $c->model('API')->get_entries();
+    return [ 'rss.tt2', { entries => $entries, view => 'TT' } ];
+}
+
 1;

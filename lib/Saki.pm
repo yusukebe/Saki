@@ -13,8 +13,8 @@ our $VERSION = '0.01';
 my $_router = Router::Simple->new;
 my ( $_class, $_template, $_model, $_view );
 
-$_view = { INCLUDE_PATH => 'tmpl/' };
-$_template = Template->new( $_view );
+$_view = { default => { INCLUDE_PATH => 'tmpl/' } };
+$_template->{default} = Template->new( $_view->{default} );
 
 sub app {
     sub {
@@ -37,8 +37,10 @@ sub app {
         {
             my $html;
             $code->[1]->{base} = $req->base;
-            $_template->process( $code->[0], $code->[1], \$html )
-              or return handle_500( $_template->error );
+            my $view_name = defined $code->[1]->{view} ? delete $code->[1]->{view} : 'default';
+            my $tt = $_template->{$view_name};
+            $tt->process( $code->[0], $code->[1], \$html )
+                or return handle_500( $tt->error );
             my $types = [ 'Content-Length' => length $html ];
             $types = $code->[2] if defined $code->[2] && $code->[2];
             return [ 200, $types, [$html] ];
@@ -80,8 +82,17 @@ sub model {
 
 sub view {
     my ( $name, $value ) = @_;
-    $_view->{$name} = $value;
-    $_template = Template->new( $_view );
+    if ( ref $value eq 'HASH' ) {
+        my $config;
+        $config = $_view->{default} unless defined $_view->{$name};
+        map { $config->{$_} = $value->{$_} } keys %$value;
+        $_view->{$name} = $config;
+    }
+    else {
+        $_view->{default}->{$name} = $value;
+        $name = 'default';
+    }
+    $_template->{$name} = Template->new( $_view->{$name} );
 }
 
 sub import {
