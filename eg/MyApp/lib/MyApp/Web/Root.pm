@@ -24,7 +24,11 @@ sub post {
 sub rss {
     my ( $self, $c ) = @_;
     my $entries = $c->model('API')->get_entries();
-    return [ 'rss.tt2', { entries => $entries, view => 'TT' } ];
+    return [
+        'rss.tt2',
+        { entries        => $entries, view => 'TT' },
+        [ 'Content-Type' => 'application/rss+xml' ]
+    ];
 }
 
 1;

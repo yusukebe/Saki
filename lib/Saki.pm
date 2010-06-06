@@ -42,7 +42,7 @@ sub app {
             $tt->process( $code->[0], $code->[1], \$html )
                 or return handle_500( $tt->error );
             my $types = [ 'Content-Length' => length $html ];
-            $types = $code->[2] if defined $code->[2] && $code->[2];
+            push @$types, @{$code->[2]} if defined $code->[2] && $code->[2];
             return [ 200, $types, [$html] ];
         }
         else {
