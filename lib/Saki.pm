@@ -116,7 +116,23 @@ Saki - glue for web applications.
 
 =head1 SYNOPSIS
 
+  package MyApp::Web;
   use Saki;
+  use MyApp::API;
+
+  # install model and view.
+  my $api = MyApp::API->new();
+  model 'API'    => $api;
+  view 'TT'      => {};
+  view 'WRAPPER' => 'layout.tt2';
+
+  # setup dispatch rules
+  get '/'          => { controller => 'Root', action => 'index' };
+  get '/entry/:id' => { controller => 'Root', action => 'entry' };
+  post '/post'     => { controller => 'Root', action => 'post' };
+  get '/rss'       => { controller => 'Root', action => 'rss' };
+
+  1;
 
 =head1 DESCRIPTION
 
