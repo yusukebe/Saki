@@ -1,6 +1,6 @@
 <h1>Hello</h1>
 <p>[% message | html %]</p>
-<h2>no pastes</h2>
+<h2>no paste</h2>
 <h3>post</h3>
 <form action="[% base %]post" method="post">
   <p><textarea name="body" cols="50" rows="8"></textarea></p>
