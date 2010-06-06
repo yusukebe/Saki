@@ -18,7 +18,7 @@ sub post {
     my ( $self, $c ) = @_;
     my $body = $c->req->param('body');
     my $id   = $c->model('API')->create_entry($body);
-    return [ 301, [ Location => $c->req->base ], [] ];
+    return [ 302, [ Location => $c->req->base ], [] ];
 }
 
 sub rss {
