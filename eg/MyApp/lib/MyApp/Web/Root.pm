@@ -1,4 +1,6 @@
 package MyApp::Web::Root;
+use strict;
+use warnings;
 
 sub index {
     my ( $self, $c ) = @_;
